@@ -11,7 +11,7 @@
  */
 
 define(['ojs/ojcore', 'knockout', 'jquery', 'appController', 
-    'ojs/ojinputtext', 'ojs/ojlistview'],
+    'ojs/ojinputtext'],
 function(oj, ko, $, app) {
     function FilmDetailViewModel() {
         var self = this;
