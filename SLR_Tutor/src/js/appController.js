@@ -46,7 +46,9 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraytabledatasource',
           self.toggleDrawer();
         }
       }
-
+      
+      self.avatarUsername = ko.observable();
+      self.avatarUsername = self.router.retrieve();
       // Drawer setup
       self.toggleDrawer = function() {
         return oj.OffcanvasUtils.toggle({selector: '#navDrawer', modality: 'modal', content: '#pageContent'});

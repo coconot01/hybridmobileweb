@@ -64,9 +64,9 @@ require(['ojs/ojcore', 'knockout', 'appController', 'ojs/ojknockout',
       self.navDataSource = app.navDataSource;
       self.navChangeHandler = app.navChangeHandler;
       self.toggleDrawer = app.toggleDrawer;
-
+      
       // Sample user data
-      self.userName = ko.observable("coconot");
+      self.userName = app.avatarUsername;
       var myappTitle = 
               oj.Translations.getTranslatedString("appTitle");
       self.appTitle = ko.observable(myappTitle);

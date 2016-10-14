@@ -3,8 +3,36 @@
  The Universal Permissive License (UPL), Version 1.0
  -->
 <div class="oj-hybrid-padding">
-  <h3>Profile Content Area</h3>
-  <div>
-      !!!!!!!
-  </div>
+    <h3>Profile Content Area</h3>
+    <div class="oj-form-layout" id="form-container"> 
+        <div class="oj-form oj-sm-odd-cols-12 oj-md-odd-cols-4 oj-md-labels-inline oj-form-no-dividers" >
+            <div class="oj-flex">
+                <div class="oj-flex-item">
+                    <label for="nickname">Nickname</label>
+                </div>
+                <div class="oj-flex-item">
+                    <input id="nickname" data-bind="ojComponent: {component: 'ojInputText', value:nickname}">
+                </div>
+            </div>
+            <div class="oj-flex">
+                <div class="oj-flex-item">
+                    <label for="loginname">Loginname</label>
+                </div>
+                <div class="oj-flex-item">
+                    <input id="loginname" data-bind="ojComponent: {component: 'ojInputText', value:loginname}">
+                </div>
+            </div>
+            <div class="oj-flex">
+                <div class="oj-flex-item">
+                    <label for="password">Password</label>
+                </div>
+                <div class="oj-flex-item">
+                    <input id="password" data-bind="ojComponent: {component: 'ojInputText', value:password}">
+                </div>
+            </div>
+            <div class="oj-flex-item">
+                <button id="button" data-bind="click: savePreferences, ojComponent: { component: 'ojButton', label: 'Save Preferences' }"> </button>
+            </div>
+        </div>
+    </div>
 </div>
