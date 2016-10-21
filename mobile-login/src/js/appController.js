@@ -10,44 +10,68 @@ define(['ojs/ojcore', 'knockout', 'ojs/ojrouter', 'ojs/ojarraytabledatasource',
   function(oj, ko) {
     function ControllerViewModel() {
       var self = this;
-      
-      var menuDashboard = 
-              oj.Translations.getTranslatedString("menu.dashboard");
-      var menuLectures = 
-              oj.Translations.getTranslatedString("menu.lectures");
-      var menuSignup = 
-              oj.Translations.getTranslatedString("menu.signup");
-      var menuProfile = 
-              oj.Translations.getTranslatedString("menu.profile");
+      self.selectedStateId = ko.observable('');
+      self.loginStatus = ko.observable(false);
+      self.authStates = ['dashboard', 'incidents', 'customers', 'profile'];
+      self.authRequired = function(stateId) {
+        return self.authStates.indexOf(stateId) >= 0;
+      };
+      self.checkAuthentication = function() {
+        return self.loginStatus();
+      };
+      self.doLogout = function() {
+        self.loginStatus(false);
+        self.router.go('login');
+      };
+      self.doLogin = function() {
+        self.loginStatus(true);
+        if(self.selectedStateId()) {
+            self.router.go(self.selectedStateId());
+        } else {
+            self.router.go('dashboard');
+        }
+      }
       // Router setup
       self.router = oj.Router.rootInstance;
       self.router.configure({
-       'dashboard': {label: menuDashboard, isDefault: true},
-       'lectures': {label: menuLectures},
-       'signup': {label: menuSignup},
-       'profile': {label: menuProfile}
+       'dashboard': {label: 'Dashboard', isDefault: self.loginStatus()},
+       'incidents': {label: 'Incidents'},
+       'customers': {label: 'Customers'},
+       'profile': {label: 'Profile'},
+       'about': {label: 'About'},
+       'login': {label: 'Login', isDefault: !self.loginStatus()}
       });
       oj.Router.defaults['urlAdapter'] = new oj.Router.urlParamAdapter();
 
       // Navigation setup
       var navData = [
-      {name: menuDashboard, id: 'dashboard',
+      {name: 'Dashboard', id: 'dashboard',
         iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-chart-icon-24'},
-      {name: menuLectures, id: 'lectures',
+      {name: 'Incidents', id: 'incidents',
         iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-fire-icon-24'},
-      {name: menuSignup, id: 'signup',
+      {name: 'Customers', id: 'customers',
         iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-people-icon-24'},
-      {name: menuProfile, id: 'profile',
-        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-person-icon-24'}
+      {name: 'Profile', id: 'profile',
+        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-person-icon-24'},
+      {name: 'About', id: 'about',
+        iconClass: 'oj-navigationlist-item-icon demo-icon-font-24 demo-info-icon-24'}
       ];
       self.navDataSource = new oj.ArrayTableDataSource(navData, {idAttribute: 'id'});
       self.navChangeHandler = function (event, data) {
+        if(self.authRequired(self.selectedStateId())) {
+            if(self.checkAuthentication()) {
+                self.router.stateId(self.selectedStateId());
+            } else {
+                self.router.stateId('login');
+            }
+        } else {
+            self.router.stateId(self.selectedStateId());
+        }
         if (data.option === 'selection' && data.value !== self.router.stateId()) {
           self.toggleDrawer();
         }
       }
-      
-      self.avatarUsername = ko.observable("temp");
+
       // Drawer setup
       self.toggleDrawer = function() {
         return oj.OffcanvasUtils.toggle({selector: '#navDrawer', modality: 'modal', content: '#pageContent'});

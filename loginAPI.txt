@@ -1,0 +1,10 @@
+Username: credemol@gmail.com
+Password: Odhfkzmf1 (Oø¿∂Û≈¨1)
+
+
+https://mcsoraclejetworkshop-mobileservice.mobileenv.us2.oraclecloud.com:443/mobile/platform/users/{username}
+
+GET /internal-rt/mobile/platform/users/~ HTTP/1.1
+oracle-mobile-api-version: 1.0
+Authorization: Basic Y3JlZGVtb2xAZ21haWwuY29tOk9kaGZrem1mMQ==
+oracle-mobile-backend-id: 71613d6a-9e41-405e-910f-f47537869de6
